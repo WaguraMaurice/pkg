@@ -106,7 +106,7 @@ class LNMO_Controller extends Controller
         $this->password          = base64_encode($this->shortCode . $this->key . $this->timestamp);
         $this->initiatorUsername = config('lnmo.initiator_username');
         $this->initiatorPassword = config('lnmo.initiator_password');
-        $this->certificate       = File::get(public_path() . '/certificates/' . $this->environment . '.cer');
+        $this->certificate       = File::get(public_path() . '/vendor/montanabay39/mpesa/certificates/' . $this->environment . '.cer');
         openssl_public_encrypt($this->initiatorPassword, $output, $this->certificate, OPENSSL_PKCS1_PADDING);
         $this->credentials       = base64_encode($output);
     }
