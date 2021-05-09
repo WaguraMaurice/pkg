@@ -135,7 +135,7 @@ class LNMO_Controller extends Controller
             'BusinessShortCode' => $this->shortCode,
             'Password'          => $this->password,
             'Timestamp'         => $this->timestamp,
-            'TransactionType'   => $request->type, // ['CustomerPayBillOnline', 'CustomerBuyGoodsOnline]
+            'TransactionType'   => $request->type ?? 'CustomerPayBillOnline', // ['CustomerPayBillOnline', 'CustomerBuyGoodsOnline]
             'Amount'            => $request->amount,
             'PartyA'            => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'PartyB'            => $this->shortCode,
@@ -167,7 +167,8 @@ class LNMO_Controller extends Controller
             }
             //code...
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
+            dd($th->getMessage());
         }
     }
 
@@ -199,7 +200,8 @@ class LNMO_Controller extends Controller
                     ]);
                 }
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
+                dd($th->getMessage());
             }
         }
 
@@ -235,7 +237,8 @@ class LNMO_Controller extends Controller
                 return $response->ResultCode == 0 ? response()->json($transaction->update(['_status' => MpesaTransaction::ACCEPTED])) : response()->json($transaction->update(['_status' => MpesaTransaction::REJECTED]));
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;\
+            dd($th->getMessage());
         }
     }
 
@@ -269,7 +272,8 @@ class LNMO_Controller extends Controller
                 return Cache::get('LMNO_AccessToken');
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
+            dd($th->getMessage());
         }
     }
 
@@ -302,7 +306,8 @@ class LNMO_Controller extends Controller
                 return false;
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
+            dd($th->getMessage());
         }
     }
 }
