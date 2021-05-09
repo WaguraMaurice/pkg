@@ -22,10 +22,10 @@ class CreateMpesaTransactionsTable extends Migration
             $table->float('transactionAmount', 32); // $Amount
             $table->string('transactionCode')->nullable()->unique(); // Nullable on transaction initialization and filled in callback event.
             $table->timestamp('transactionTimeStamp'); // a transaction initialization time stamp.
-            $table->json('transactionDetails'); // transaction remark's. e.t.c
+            $table->text('transactionDetails'); // transaction remark's. e.t.c
             $table->string('transactionId')->unique(); // unique id, to be used in callback query's.
             $table->text('accountReference'); // an account/book number under or held within the receiver where the money is headed, to and fro wise.
-            $table->json('responseFeedBack'); // full json response string, as from the processor. json_encode($response)
+            $table->text('responseFeedBack'); // full json response string, as from the processor. json_encode($response)
             $table->enum('_status', [MpesaTransaction::PROCESSING, MpesaTransaction::ACCEPTED, MpesaTransaction::REJECTED])->default(MpesaTransaction::PROCESSING);
             $table->timestamps();
         });
