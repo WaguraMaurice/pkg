@@ -26,7 +26,7 @@ class MpesaServiceProvider extends ServiceProvider
             // Load the migration files.
             $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
             // Set a group namespace for the routes defined, then load the route file.
-            $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
+            $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
 
             // Publishing the configuration & certificate files.
             $this->publishes([
