@@ -52,11 +52,12 @@ class Clean extends Command
             Artisan::call('optimize');
             Artisan::call('up');
             // logic for running composer's commands.
-            app()->make(Composer::class)->run(['dump-autoload']);
-            app()->make(Composer::class)->run(['update']);
-            app()->make(Composer::class)->run(['dump-autoload']);
+            // app()->make(Composer::class)->run(['dump-autoload']);
+            // app()->make(Composer::class)->run(['update']);
+            // app()->make(Composer::class)->run(['dump-autoload']);
         } catch (\Throwable $th) {
-            throw $th->getMessage();
+            // throw $th;
+            dd($th->getMessage());
         }
 
         return "App has been cleaned";
