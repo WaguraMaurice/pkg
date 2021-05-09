@@ -18,7 +18,7 @@ class CreateMpesaTransactionsTable extends Migration
             $table->id();
             $table->string('partyA'); // depositor. ['c2b / lnmo' => $MSISDN, 'b2c' => $ShortCode]
             $table->string('partyB'); // receiver. ['c2b / lnmo' => $ShortCode, 'b2c' => $MSISDN]
-            $table->decimal('transactionType'); // transaction action category. ['in' => ['c2b', 'lnmo'], 'out' => 'b2c']
+            $table->string('transactionType'); // transaction action category. ['in' => ['c2b', 'lnmo'], 'out' => 'b2c']
             $table->float('transactionAmount', 32); // $Amount
             $table->string('transactionCode')->nullable()->unique(); // Nullable on transaction initialization and filled in callback event.
             $table->timestamp('transactionTimeStamp'); // a transaction initialization time stamp.
