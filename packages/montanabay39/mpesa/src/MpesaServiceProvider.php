@@ -28,25 +28,18 @@ class MpesaServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
             // Set a group namespace for the routes defined, then load the route file.
             $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
+
+            // Publishing the configuration file.
+            $this->publishes([
+                __DIR__.'/config/mpesa.php' => config_path('mpesa.php'),
+            ]);
+
             // merge with config from mpesa.php
-            // $this->mergeConfigFrom(__DIR__.'/config/mpesa.php', 'mpesa');
-            
-            // if (!File::exists(config_path() . '/mpesa.php')) {
-                // Publishing the configuration file.
-                $this->publishes([
-                    __DIR__.'/config/mpesa.php' => config_path('mpesa.php'),
-                ]);
-            // } else {
-                // merge with config from mpesa.php
-                $this->mergeConfigFrom(__DIR__.'/config/mpesa.php', 'mpesa');
-            // }
+            $this->mergeConfigFrom(__DIR__.'/config/mpesa.php', 'mpesa');
 
-            // if(!File::exists(public_path() . '/vendor/montanabay39/mpesa/certificates/' . config('mpesa.environment') . '.cer')) {
-                // Publishing the certificates.
-                $this->publishes([
-                    __DIR__.'/public/certificates/' . config("mpesa.environment") . '.cer' => public_path('vendor/montanabay39/mpesa/certificates/' . config("mpesa.environment") . '.cer'),
-                ]);
-
-            // }
+            // Publishing the certificates.
+            $this->publishes([
+                __DIR__.'/public/certificates/' => public_path('vendor/montanabay39/mpesa/certificates/'),
+            ]);
     }
 }
