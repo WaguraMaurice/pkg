@@ -126,7 +126,7 @@ class LNMO_Controller extends Controller
      * @param array $request from mpesa api
      * @return json respone for payment detials i.e transcation code and timestamps e.t.c
      */
-    public function transact(Request $request)
+    public function transaction(Request $request)
     {
         // transactions endpoint provided by service provider.
         $endpoint = $this->baseURL . '/mpesa/stkpush/v1/processrequest';
@@ -160,7 +160,7 @@ class LNMO_Controller extends Controller
                     'transactionDetails'   => json_decode($data)->TransactionDesc,
                     'transactionId'        => $response->CheckoutRequestID,
                     'accountReference'     => json_decode($data)->AccountReference,
-                    'responseFeedBack'     => json_encode($response)
+                    'responseFeedBack'     => json_encode(['transaction' => $response])
                 ]);
 
                 return response()->json($transaction);
@@ -184,28 +184,28 @@ class LNMO_Controller extends Controller
     {
         $callback = $request['Body']['stkCallback'];
 
-        if (isset($callback['ResultCode']) && $callback['ResultCode'] == 0) {
+        try {
+            // find transaction via CheckoutRequestID as the unique transaction Id.
+            $transaction = MpesaTransaction::where(['transactionId' => $callback['CheckoutRequestID']])->firstOrFail();
 
-            try {
-                // find transaction via CheckoutRequestID as the unique transaction Id.
-                $transaction = MpesaTransaction::where(['transactionId' => $callback['CheckoutRequestID']])->firstOrFail();
+            if($transaction) {
 
-                if($transaction) {
-                    $transaction->update([
-                        'transactionCode' => $callback['CallbackMetadata']['Item'][1]['Value'],
-                        '_status'         => MpesaTransaction::ACCEPTED
-                    ]) ?? $transaction->update([
-                        'transactionCode' => $callback['CallbackMetadata']['Item'][1]['Value'],
-                        '_status'         => MpesaTransaction::REJECTED
-                    ]);
-                }
-            } catch (\Throwable $th) {
-                // throw $th;
-                dd($th->getMessage());
+                isset($callback['ResultCode']) && $callback['ResultCode'] == 0 ? $transaction->update([
+                    'transactionCode'  => $callback['CallbackMetadata']['Item'][1]['Value'],
+                    'responseFeedBack' => json_encode(array_merge(json_decode($transaction->responseFeedBack, true), ['callback' => $request->all()])),
+                    '_status'          => MpesaTransaction::ACCEPTED
+                ]) : $transaction->update([
+                    'transactionCode'  => $callback['CallbackMetadata']['Item'][1]['Value'],
+                    'responseFeedBack' => json_encode(array_merge(json_decode($transaction->responseFeedBack, true), ['callback' => $request->all()])),
+                    '_status'          => MpesaTransaction::REJECTED
+                ]);
+
+                return response()->json($transaction);
             }
+        } catch (\Throwable $th) {
+            // throw $th;
+            dd($th->getMessage());
         }
-
-        return;
     }
 
     /**
@@ -229,13 +229,25 @@ class LNMO_Controller extends Controller
 
         $response = $this->submit($endpoint, $data);
 
+        // dd($response);
+
         try {
 
             $transaction = MpesaTransaction::where(['transactionId' => $request->CheckoutRequestID])->firstOrFail();
 
             if($transaction) {
-                return $response->ResultCode == 0 ? response()->json($transaction->update(['_status' => MpesaTransaction::ACCEPTED])) : response()->json($transaction->update(['_status' => MpesaTransaction::REJECTED]));
+
+                $response->ResultCode == 0 ? $transaction->update([
+                    'responseFeedBack' => json_encode(array_merge(json_decode($transaction->responseFeedBack, true), ['query' => $response])),
+                    '_status'          => MpesaTransaction::ACCEPTED
+                ]) : $transaction->update([
+                    'responseFeedBack' => json_encode(array_merge(json_decode($transaction->responseFeedBack, true), ['query' => $response])),
+                    '_status'          => MpesaTransaction::REJECTED
+                ]);
+
+                return response()->json($transaction);
             }
+            
         } catch (\Throwable $th) {
             // throw $th;\
             dd($th->getMessage());
