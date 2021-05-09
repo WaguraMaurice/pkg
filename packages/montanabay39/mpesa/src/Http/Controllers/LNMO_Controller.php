@@ -135,7 +135,7 @@ class LNMO_Controller extends Controller
             'BusinessShortCode' => $this->shortCode,
             'Password'          => $this->password,
             'Timestamp'         => $this->timestamp,
-            'TransactionType'   => $this->type, // ['CustomerPayBillOnline', 'CustomerBuyGoodsOnline]
+            'TransactionType'   => $request->type, // ['CustomerPayBillOnline', 'CustomerBuyGoodsOnline]
             'Amount'            => $request->amount,
             'PartyA'            => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'PartyB'            => $this->shortCode,
