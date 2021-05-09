@@ -97,15 +97,15 @@ class LNMO_Controller extends Controller
     {
         $this->timestamp         = Carbon::now()->format('YmdHis');
         $this->callbackURL       = config('app.url');
-        $this->environment       = config('lnmo.environment');
+        $this->environment       = config('mpesa.lnmo_environment');
         $this->baseURL           = 'https://' . ($this->environment == 'production' ? 'api' : 'sandbox') . '.safaricom.co.ke';
-        $this->consumerKey       = config('lnmo.consumer_key');
-        $this->consumerSecret    = config('lnmo.consumer_secret');
-        $this->shortCode         = config('lnmo.shortcode');
-        $this->key               = config('lnmo.key');
+        $this->consumerKey       = config('mpesa.lnmo_consumer_key');
+        $this->consumerSecret    = config('mpesa.lnmo_consumer_secret');
+        $this->shortCode         = config('mpesa.lnmo_shortcode');
+        $this->key               = config('mpesa.lnmo_key');
         $this->password          = base64_encode($this->shortCode . $this->key . $this->timestamp);
-        $this->initiatorUsername = config('lnmo.initiator_username');
-        $this->initiatorPassword = config('lnmo.initiator_password');
+        $this->initiatorUsername = config('mpesa.lnmo_initiator_username');
+        $this->initiatorPassword = config('mpesa.lnmo_initiator_password');
         $this->certificate       = File::get(public_path() . '/vendor/montanabay39/mpesa/certificates/' . $this->environment . '.cer');
         openssl_public_encrypt($this->initiatorPassword, $output, $this->certificate, OPENSSL_PKCS1_PADDING);
         $this->credentials       = base64_encode($output);
@@ -140,7 +140,7 @@ class LNMO_Controller extends Controller
             'PartyA'            => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'PartyB'            => $this->shortCode,
             'PhoneNumber'       => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
-            'CallBackURL'       => route('lnmo.callback'),
+            'CallBackURL'       => route('mpesa.lnmo_callback'),
             'AccountReference'  => $request->reference,
             'TransactionDesc'   => $request->reference . ' Push STK Transaction'
         ]);
