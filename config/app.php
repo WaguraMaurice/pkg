@@ -165,6 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
+        
+         Montanabay39\Mpesa\MpesaServiceProvider::class,
 
         /*
          * Application Service Providers...
