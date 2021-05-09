@@ -2,7 +2,6 @@
 
 namespace Montanabay39\Mpesa;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 class MpesaServiceProvider extends ServiceProvider
@@ -29,17 +28,13 @@ class MpesaServiceProvider extends ServiceProvider
             // Set a group namespace for the routes defined, then load the route file.
             $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
 
-            // Publishing the configuration file.
+            // Publishing the configuration & certificate files.
             $this->publishes([
                 __DIR__.'/config/mpesa.php' => config_path('mpesa.php'),
+                __DIR__.'/public/certificates/' => public_path('vendor/montanabay39/mpesa/certificates/')
             ]);
 
             // merge with config from mpesa.php
             $this->mergeConfigFrom(__DIR__.'/config/mpesa.php', 'mpesa');
-
-            // Publishing the certificates.
-            $this->publishes([
-                __DIR__.'/public/certificates/' => public_path('vendor/montanabay39/mpesa/certificates/'),
-            ]);
     }
 }
