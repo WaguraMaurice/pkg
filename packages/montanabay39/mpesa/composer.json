@@ -1,0 +1,14 @@
+{
+    "name": "montanabay39/mpesa",
+    "description": "package to support for both c2b & b2c transactions on mpesa api",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Wagura Maurice",
+            "email": "business@waguramaurice.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
