@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Montanabay39\Mpesa\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Montanabay39\Mpesa\Models\MpesaTransaction;
