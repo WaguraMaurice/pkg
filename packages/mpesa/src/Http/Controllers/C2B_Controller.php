@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
 use Montanabay39\Mpesa\Models\MpesaTransaction;
 
-class C2B_MpesaController extends Controller
+class C2B_Controller extends Controller
 {
     /**
      * Provide for timestamp or live api transactions
