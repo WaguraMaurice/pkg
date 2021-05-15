@@ -98,15 +98,15 @@ class LNMO_Controller extends Controller
     {
         $this->timestamp         = Carbon::now()->format('YmdHis');
         $this->callbackURL       = config('app.url');
-        $this->environment       = config('mpesa.lnmo_environment');
+        $this->environment       = config('mpesa.lnmo.environment');
         $this->baseURL           = 'https://' . ($this->environment == 'production' ? 'api' : 'sandbox') . '.safaricom.co.ke';
-        $this->consumerKey       = config('mpesa.lnmo_consumer_key');
-        $this->consumerSecret    = config('mpesa.lnmo_consumer_secret');
-        $this->shortCode         = config('mpesa.lnmo_shortcode');
-        $this->key               = config('mpesa.lnmo_key');
+        $this->consumerKey       = config('mpesa.lnmo.consumer.key');
+        $this->consumerSecret    = config('mpesa.lnmo.consumer.secret');
+        $this->shortCode         = config('mpesa.lnmo.shortcode');
+        $this->key               = config('mpesa.lnmo.key');
         $this->password          = base64_encode($this->shortCode . $this->key . $this->timestamp);
-        $this->initiatorUsername = config('mpesa.lnmo_initiator_username');
-        $this->initiatorPassword = config('mpesa.lnmo_initiator_password');
+        $this->initiatorUsername = config('mpesa.lnmo.initiator.username');
+        $this->initiatorPassword = config('mpesa.lnmo.initiator.password');
         $this->certificate       = File::get(public_path() . '/vendor/mpesa/certificates/' . $this->environment . '.cer');
         openssl_public_encrypt($this->initiatorPassword, $output, $this->certificate, OPENSSL_PKCS1_PADDING);
         $this->credentials       = base64_encode($output);
@@ -143,7 +143,7 @@ class LNMO_Controller extends Controller
             'PhoneNumber'       => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'CallBackURL'       => route('mpesa.lnmo.callback'),
             'AccountReference'  => $request->reference,
-            'TransactionDesc'   => $request->reference . ' Push STK Transaction'
+            'TransactionDesc'   => $request->reference . ' LNMO STK Push Transaction'
         ]);
         // send data for processing
         $response = $this->submit($endpoint, $data);
@@ -231,8 +231,6 @@ class LNMO_Controller extends Controller
 
         $response = $this->submit($endpoint, $data);
 
-        // dd($response);
-
         try {
 
             $transaction = MpesaTransaction::where(['transactionId' => $request->CheckoutRequestID])->firstOrFail();
@@ -266,8 +264,8 @@ class LNMO_Controller extends Controller
     protected function generateAccessToken()
     {
         try {
-            if (!Cache::has('LMNO_AccessToken')) {
-                return Cache::remember('LMNO_AccessToken', now()->addMinutes(59), function () {
+            if (!Cache::has('LMNO_ACCESS_TOKEN')) {
+                return Cache::remember('LMNO_ACCESS_TOKEN', now()->addMinutes(59), function () {
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $this->baseURL . '/oauth/v1/generate?grant_type=client_credentials');
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -284,7 +282,7 @@ class LNMO_Controller extends Controller
                     }
                 });
             } else {
-                return Cache::get('LMNO_AccessToken');
+                return Cache::get('LMNO_ACCESS_TOKEN');
             }
         } catch (\Throwable $th) {
             // throw $th;
