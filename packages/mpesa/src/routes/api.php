@@ -20,12 +20,12 @@ use Montanabay39\Mpesa\Http\Controllers\B2C_Controller;
 
 Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/mpesa/'], function () {
     // MPESA LNMO ROUTES
-    Route::post('LMNO', [LNMO_Controller::class, 'transaction'])->name('mpesa.lnmo');
-    Route::post('LMNO/callback', [LNMO_Controller::class, 'callback'])->name('mpesa.lnmo.callback');
+    Route::post('LMNO/transaction', [LNMO_Controller::class, 'transaction'])->name('mpesa.lnmo');
+    Route::post('LMNO/transaction/callback', [LNMO_Controller::class, 'callback'])->name('mpesa.lnmo.transaction.callback');
     Route::post('LMNO/query', [LNMO_Controller::class, 'query'])->name('mpesa.lnmo.query');
     // MPESA C2B ROUTES
     Route::get('C2B/register', [C2B_Controller::class, 'register'])->name('mpesa.c2b.register'); // use/hit only once.
-    Route::post('C2B', [C2B_Controller::class, 'transaction'])->name('mpesa.c2b');
+    Route::post('C2B/transaction', [C2B_Controller::class, 'transaction'])->name('mpesa.c2b.transaction');
     Route::post('C2B/validation/callback', [C2B_Controller::class, 'validation'])->name('mpesa.c2b.validation.callback');
     Route::post('C2B/confirmation/callback', [C2B_Controller::class, 'confirmation'])->name('mpesa.c2b.confirmation.callback');
     Route::post('C2B/status', [C2B_Controller::class, 'status'])->name('mpesa.c2b.status');
@@ -35,8 +35,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/mpesa/'], function 
     Route::get('C2B/balance', [C2B_Controller::class, 'balance'])->name('mpesa.c2b.balance');
     Route::post('C2B/balance/callback', [C2B_Controller::class, 'balanceCallback'])->name('mpesa.c2b.balance.callback');
     // MPESA B2C ROUTES
-    Route::post('B2C', [B2C_Controller::class, 'transaction'])->name('mpesa.b2c');
-    Route::post('B2C/callback', [B2C_Controller::class, 'callback'])->name('mpesa.b2c.callback');
+    Route::post('B2C/transaction', [B2C_Controller::class, 'transaction'])->name('mpesa.b2c.transaction');
+    Route::post('B2C/transaction/callback', [B2C_Controller::class, 'callback'])->name('mpesa.b2c.transaction.callback');
     Route::post('B2C/status', [B2C_Controller::class, 'status'])->name('mpesa.b2c.status');
     Route::post('B2C/status/callback', [B2C_Controller::class, 'statusCallback'])->name('mpesa.b2c.status.callback');
     Route::post('B2C/reverse', [B2C_Controller::class, 'reverse'])->name('mpesa.b2c.reverse');
