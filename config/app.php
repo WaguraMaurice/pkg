@@ -166,7 +166,7 @@ return [
          * Package Service Providers...
          */
         
-         Montanabay39\Mpesa\MpesaServiceProvider::class,
+         WaguraMaurice\Mpesa\MpesaServiceProvider::class,
 
         /*
          * Application Service Providers...

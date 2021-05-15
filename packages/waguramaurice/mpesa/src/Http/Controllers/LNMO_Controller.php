@@ -1,6 +1,6 @@
 <?php
 
-namespace Montanabay39\Mpesa\Http\Controllers;
+namespace WaguraMaurice\Mpesa\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
-use Montanabay39\Mpesa\Models\MpesaTransaction;
+use WaguraMaurice\Mpesa\Models\MpesaTransaction;
 
 class LNMO_Controller extends Controller
 {
@@ -107,7 +107,7 @@ class LNMO_Controller extends Controller
         $this->password          = base64_encode($this->shortCode . $this->key . $this->timestamp);
         $this->initiatorUsername = config('mpesa.lnmo_initiator_username');
         $this->initiatorPassword = config('mpesa.lnmo_initiator_password');
-        $this->certificate       = File::get(public_path() . '/vendor/montanabay39/mpesa/certificates/' . $this->environment . '.cer');
+        $this->certificate       = File::get(public_path() . '/vendor/WaguraMaurice/mpesa/certificates/' . $this->environment . '.cer');
         openssl_public_encrypt($this->initiatorPassword, $output, $this->certificate, OPENSSL_PKCS1_PADDING);
         $this->credentials       = base64_encode($output);
     }

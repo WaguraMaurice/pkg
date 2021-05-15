@@ -30,7 +30,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Montanabay39\\Mpesa\\": "packages/montanabay39/mpesa/src"
+            "WaguraMaurice\\Mpesa\\": "packages/waguramaurice/mpesa/src"
         }
     },
     "autoload-dev": {
