@@ -14,7 +14,9 @@ Publish package: `php artisan vendor:publish` <br /> Run migration: `php artisan
 
 ## Usage
 
-Write a few lines about the usage of this package.
+This package supports implementation only via HTTP request, as show in the documentation.
+
+- [Postman Documentation](https://documenter.getpostman.com/view/1669356/TzRX7Q55#d9235f16-d43c-4281-a0fa-5c9ba4f8e192)
 
 ## Testing
 
