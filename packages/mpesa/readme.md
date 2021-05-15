@@ -14,7 +14,7 @@ Publish package: `php artisan vendor:publish` <br /> Run migration: `php artisan
 
 ## Usage
 
-This package supports implementation only via HTTP request, as show in the [Postman Documentation](https://documenter.getpostman.com/view/1669356/TzRX7Q55#d9235f16-d43c-4281-a0fa-5c9ba4f8e192)
+This package supports implementation only via HTTP request, as shown in the [Postman Documentation](https://documenter.getpostman.com/view/1669356/TzRX7Q55#d9235f16-d43c-4281-a0fa-5c9ba4f8e192)
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/1669356-80e6b1fc-757d-4483-8f5d-3d025fdea7e7?action=collection%2Ffork&collection-url=entityId%3D1669356-80e6b1fc-757d-4483-8f5d-3d025fdea7e7%26entityType%3Dcollection%26workspaceId%3D4d9a6ea0-b2fa-4ddb-8a49-92e9310706f7#?env%5BMontanbay39%20Mpesa%20Package%20ENV%5D=W3sia2V5Ijoibmdyb2tJZCIsInZhbHVlIjoiZDQxZDdmNjJlMTRhIiwiZW5hYmxlZCI6dHJ1ZX1d)
 
