@@ -25,7 +25,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/mpesa/'], function 
     Route::post('LMNO/query', [LNMO_Controller::class, 'query'])->name('mpesa.lnmo.query');
     // MPESA C2B ROUTES
     Route::get('C2B/register', [C2B_Controller::class, 'register'])->name('mpesa.c2b.register'); // use/hit only once.
-    Route::post('C2B/transaction', [C2B_Controller::class, 'transaction'])->name('mpesa.c2b.transaction');
+    Route::post('C2B/transaction', [C2B_Controller::class, 'transaction'])->name('mpesa.c2b.transaction'); // only for simulation services.
     Route::post('C2B/validation/callback', [C2B_Controller::class, 'validation'])->name('mpesa.c2b.validation.callback');
     Route::post('C2B/confirmation/callback', [C2B_Controller::class, 'confirmation'])->name('mpesa.c2b.confirmation.callback');
     Route::post('C2B/status', [C2B_Controller::class, 'status'])->name('mpesa.c2b.status');
