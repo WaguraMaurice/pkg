@@ -19,9 +19,9 @@ use Montanabay39\Mpesa\Http\Controllers\C2B_Controller;
 
 Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/mpesa/'], function () {
     // MPESA LNMO ROUTES
-    Route::post('lmno', [LNMO_Controller::class, 'transaction'])->name('mpesa.lnmo');
-    Route::post('lmno/callback', [LNMO_Controller::class, 'callback'])->name('mpesa.lnmo.callback');
-    Route::post('lmno/query', [LNMO_Controller::class, 'query'])->name('mpesa.lnmo.query');
+    Route::post('LMNO', [LNMO_Controller::class, 'transaction'])->name('mpesa.lnmo');
+    Route::post('LMNO/callback', [LNMO_Controller::class, 'callback'])->name('mpesa.lnmo.callback');
+    Route::post('LMNO/query', [LNMO_Controller::class, 'query'])->name('mpesa.lnmo.query');
 
     // MPESA C2B ROUTES
     Route::post('C2B', [C2B_Controller::class, 'transaction'])->name('mpesa.c2b.transaction');
