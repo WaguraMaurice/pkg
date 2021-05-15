@@ -10,8 +10,7 @@
 
 ## Configuration
 
-`php artisan vendor:publish`
-`php artisan migrate`
+Publish package: `php artisan vendor:publish` <br /> Run migration: `php artisan migrate`
 
 ## Usage
 
@@ -40,7 +39,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security-related issues, please email business@wagura-maurice.com instead of using the issue tracker.
+If you discover any security-related issues, please email business@waguramaurice.com instead of using the issue tracker.
 
 ## License
 
