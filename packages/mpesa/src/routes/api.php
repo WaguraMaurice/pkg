@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use WaguraMaurice\Mpesa\Http\Controllers\LNMO_Controller;
+use Montanabay39\Mpesa\Http\Controllers\LNMO_Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ use WaguraMaurice\Mpesa\Http\Controllers\LNMO_Controller;
 |
 */
 
-Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/WaguraMaurice/mpesa/'], function () {
+Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/mpesa/'], function () {
     // MPESA LNMO ROUTES
     Route::post('lmno/transaction', [LNMO_Controller::class, 'transaction'])->name('mpesa.lnmo.transaction');
     Route::post('lmno/callback', [LNMO_Controller::class, 'callback'])->name('mpesa.lnmo.callback');

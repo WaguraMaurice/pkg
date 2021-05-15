@@ -1,6 +1,6 @@
 {
-    "name": "waguramaurice/mpesa",
-    "description": "A description for mpesa.",
+    "name": "montanabay39/mpesa",
+    "description": "laravel package for implementing C2B & B2C transactions as prescribed by Safaricom's daraja API",
     "type": "package",
     "license": "MIT",
     "keywords": [
@@ -8,7 +8,7 @@
     ],
     "authors": [
         {
-            "name": "wagura maurice",
+            "name": "Wagura Maurice",
             "email": "business@waguramaurice.com"
         }
     ],
@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Waguramaurice\\Mpesa\\": "./src"
+            "Montanabay39\\Mpesa\\": "./src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Waguramaurice\\Mpesa\\Tests\\": "tests"
+            "Montanabay39\\Mpesa\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -31,7 +31,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Waguramaurice\\Mpesa\\MpesaServiceProvider"
+                "Montanabay39\\Mpesa\\MpesaServiceProvider"
             ]
         }
     },

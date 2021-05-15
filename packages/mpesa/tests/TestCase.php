@@ -1,6 +1,6 @@
 <?php
 
-namespace Waguramaurice\Mpesa\Tests;
+namespace Montanabay39\Mpesa\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -16,7 +16,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            \Waguramaurice\Mpesa\MpesaServiceProvider::class,
+            \Montanabay39\Mpesa\MpesaServiceProvider::class,
         ];
     }
 

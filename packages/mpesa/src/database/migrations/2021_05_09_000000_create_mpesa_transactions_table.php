@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use WaguraMaurice\Mpesa\Models\MpesaTransaction;
+use Montanabay39\Mpesa\Models\MpesaTransaction;
 
 class CreateMpesaTransactionsTable extends Migration
 {
