@@ -1,6 +1,6 @@
 <?php
 
-namespace Montanabay39\Mpesa;
+namespace WaguraMaurice\Mpesa;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -31,7 +31,7 @@ class MpesaServiceProvider extends ServiceProvider
             // Publishing the configuration & certificate files.
             $this->publishes([
                 __DIR__.'/config/mpesa.php' => config_path('mpesa.php'),
-                __DIR__.'/public/certificates/' => public_path('vendor/montanabay39/mpesa/certificates/')
+                __DIR__.'/public/certificates/' => public_path('vendor/WaguraMaurice/mpesa/certificates/')
             ]);
 
             // merge with config from mpesa.php

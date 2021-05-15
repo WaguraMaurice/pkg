@@ -1,6 +1,6 @@
 <?php
 
-namespace Montanabay39\Mpesa\Models;
+namespace WaguraMaurice\Mpesa\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
