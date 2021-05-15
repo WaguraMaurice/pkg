@@ -264,8 +264,8 @@ class LNMO_Controller extends Controller
     protected function generateAccessToken()
     {
         try {
-            if (!Cache::has('LMNO_ACCESS_TOKEN')) {
-                return Cache::remember('LMNO_ACCESS_TOKEN', now()->addMinutes(59), function () {
+            if (!Cache::has('LNMO_ACCESS_TOKEN')) {
+                return Cache::remember('LNMO_ACCESS_TOKEN', now()->addMinutes(59), function () {
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $this->baseURL . '/oauth/v1/generate?grant_type=client_credentials');
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -282,7 +282,7 @@ class LNMO_Controller extends Controller
                     }
                 });
             } else {
-                return Cache::get('LMNO_ACCESS_TOKEN');
+                return Cache::get('LNMO_ACCESS_TOKEN');
             }
         } catch (\Throwable $th) {
             // throw $th;

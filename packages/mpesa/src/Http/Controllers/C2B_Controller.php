@@ -99,6 +99,30 @@ class C2B_Controller extends Controller
     }
 
     /**
+     * Register Client to Business URL's
+     *
+     * Thisthod is used to register URLs for callbacks when money is sent from the MPesa toolkit menu
+     *
+     * @param string $confirmURL The local URL that MPesa calls to confirm a payment
+     * @param string $ValidationURL The local URL that MPesa calls to validate a payment
+     * @return object Curl Response from submit method, false on failure
+     */
+    public function register()
+    {
+        $data = json_encode([
+            'ShortCode'       => $this->shortCode,
+            'ResponseType'    => 'Completed', // ['Completed', 'Cancelled']
+            'ConfirmationURL' => route('mpesa.c2b.validation.callback'),
+            'ValidationURL'   => route('mpesa.c2b.confirmation.callback')
+        ]);
+
+        $endpoint = $this->baseURL . '/mpesa/c2b/v1/registerurl';
+        $response = $this->submit($endpoint, $data);
+
+        return json_encode($response);
+    }
+
+    /**
      * C2B Transaction simulation // Debugging only.
      *
      * This method is used to simulate a C2B Transaction to test your ConfirmURL and ValidationURL in the Client to Business method
@@ -144,7 +168,7 @@ class C2B_Controller extends Controller
                 'transactionAmount'    => $request->TransAmount,
                 'transactionCode'      => $request->TransID,
                 'transactionTimeStamp' => $request->TransTime,
-                'transactionDetails'   => $request->BillRefNumber . ' C2B STK SIM Transaction',
+                'transactionDetails'   => 'C2B STK SIM Transaction: ' . $request->BillRefNumber,
                 'transactionId'        => $request->TransTime,
                 'accountReference'     => $request->BillRefNumber,
                 'responseFeedBack'     => json_encode(['validation' => $request->all()])
@@ -164,7 +188,7 @@ class C2B_Controller extends Controller
 
         } catch (\Throwable $th) {
             // throw $th;
-            Log::info('C2B TRANSACTION VALIDATION');
+            Log::info('C2B VALIDATION');
             Log::info(print_r($th->getMessage()));
         }
     }
@@ -184,49 +208,16 @@ class C2B_Controller extends Controller
             $transaction = MpesaTransaction::where(['transactionId' => $request->ThirdPartyTransID])->firstOrFail();
             // update transaction status
             $transaction->update(['_status' => MpesaTransaction::ACCEPTED]);
-            // response to safaricom:
-            return response()->json([
-                "C2BPaymentConfirmationResult" => "Success"
-            ]);
         } catch (\Throwable $th) {
             // throw $th;
-            Log::info('C2B TRANSACTION CONFIRMATION');
+            Log::info('C2B CONFIRMATION');
             Log::info(print_r($th->getMessage()));
         }
-    }
 
-    /**
-     * Check Balance
-     *
-     * Check C2B balance
-     *
-     * @return object Curl Response from submit method, false on failure
-     */
-    public function balance()
-    {
-        $data = json_encode([
-            'CommandID'          => 'AccountBalance',
-            'PartyA'             => $this->shortCode,
-            'IdentifierType'     => 4,
-            'Remarks'            => 'Account Balance: ' . $this->shortCode,
-            'Initiator'          => $this->initiatorUsername,
-            'SecurityCredential' => $this->credentials,
-            'QueueTimeOutURL'    => route('c2b.balance.callback'),
-            'ResultURL'          => route('c2b.balance.callback')
+        // response to safaricom:
+        return response()->json([
+            "C2BPaymentConfirmationResult" => "Success"
         ]);
-
-        $endpoint = $this->baseURL . '/mpesa/accountbalance/v1/query';
-        $response = $this->submit($endpoint, $data);
-
-        return json_encode($response);
-    }
-
-    public function balanceCallback(Request $request)
-    {
-        Log::info("C2B BALANCE");
-        Log::info(print_r($request->all(), true));
-        
-        return;
     }
 
     /**
@@ -261,7 +252,7 @@ class C2B_Controller extends Controller
 
     public function statusCallback(Request $request)
     {
-        Log::info("C2B TRANSACTION STATUS CALLBACK");
+        Log::info("C2B STATUS CALLBACK");
         Log::info(print_r($request->all(), true));
 
         return;
@@ -278,20 +269,20 @@ class C2B_Controller extends Controller
      * @return object Curl Response from submit method, false on failure
      */
 
-    public function reverseTransaction(Request $request)
+    public function reverse(Request $request)
     {
         $data = json_encode([
             'Initiator'              => $this->initiatorUsername,
             'SecurityCredential'     => $this->credentials,
             'CommandID'              => 'TransactionReversal',
-            'TransactionID'          => $request->TransactionCode,
+            'TransactionID'          => $request->transactionCode,
             'Amount'                 => $request->amount,
             'ReceiverParty'          => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'RecieverIdentifierType' => 1, // [1 => 'MSISDN', 2 => 'Till_Number', 4 => 'Shortcode']
             'ResultURL'              => route('c2b.ke.reverse.transaction.callback'),
             'QueueTimeOutURL'        => route('c2b.ke.reverse.transaction.callback'),
-            'Remarks'                => $request->tCode . ' Transaction Reversal',
-            'Occasion'               => $request->tCode . ' Transaction Reversal'
+            'Remarks'                => $request->transactionCode . ' Transaction Reversal',
+            'Occasion'               => $request->transactionCode . ' Transaction Reversal'
         ]);
 
         $endpoint = $this->baseURL . '/mpesa/reversal/v1/request';
@@ -300,7 +291,7 @@ class C2B_Controller extends Controller
         return json_encode($response);
     }
 
-    public function reverseTransactionCallback(Request $request)
+    public function reverseCallback(Request $request)
     {
         Log::info("C2B REVERSE TRANSACTION CALLBACK");
         Log::info(print_r($request->all(), true));
@@ -309,27 +300,37 @@ class C2B_Controller extends Controller
     }
 
     /**
-     * Register Client to Business URL's
+     * Check Balance
      *
-     * Thisthod is used to register URLs for callbacks when money is sent from the MPesa toolkit menu
+     * Check C2B balance
      *
-     * @param string $confirmURL The local URL that MPesa calls to confirm a payment
-     * @param string $ValidationURL The local URL that MPesa calls to validate a payment
      * @return object Curl Response from submit method, false on failure
      */
-    public function register()
+    public function balance()
     {
         $data = json_encode([
-            'ShortCode'       => $this->shortCode,
-            'ResponseType'    => 'Completed', // ['Completed', 'Cancelled']
-            'ConfirmationURL' => route('c2b.validation.callback'),
-            'ValidationURL'   => route('c2b.confirmation.callback')
+            'CommandID'          => 'AccountBalance',
+            'PartyA'             => $this->shortCode,
+            'IdentifierType'     => 4,
+            'Remarks'            => 'Account Balance: ' . $this->shortCode,
+            'Initiator'          => $this->initiatorUsername,
+            'SecurityCredential' => $this->credentials,
+            'QueueTimeOutURL'    => route('c2b.balance.callback'),
+            'ResultURL'          => route('c2b.balance.callback')
         ]);
 
-        $endpoint = $this->baseURL . '/mpesa/c2b/v1/registerurl';
+        $endpoint = $this->baseURL . '/mpesa/accountbalance/v1/query';
         $response = $this->submit($endpoint, $data);
 
         return json_encode($response);
+    }
+
+    public function balanceCallback(Request $request)
+    {
+        Log::info("C2B BALANCE CALLBACK");
+        Log::info(print_r($request->all(), true));
+        
+        return;
     }
 
     /**
