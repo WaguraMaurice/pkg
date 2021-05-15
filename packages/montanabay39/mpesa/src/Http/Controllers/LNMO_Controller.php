@@ -4,6 +4,7 @@ namespace Montanabay39\Mpesa\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
@@ -165,10 +166,10 @@ class LNMO_Controller extends Controller
 
                 return response()->json($transaction);
             }
-            //code...
         } catch (\Throwable $th) {
             // throw $th;
-            dd($th->getMessage());
+            Log::info('LNMO TRANSACTION');
+            Log::info(print_r($th->getMessage()));
         }
     }
 
@@ -204,7 +205,8 @@ class LNMO_Controller extends Controller
             }
         } catch (\Throwable $th) {
             // throw $th;
-            dd($th->getMessage());
+            Log::info('LNMO CALLBACK');
+            Log::info(print_r($th->getMessage()));
         }
     }
 
@@ -250,7 +252,8 @@ class LNMO_Controller extends Controller
             
         } catch (\Throwable $th) {
             // throw $th;\
-            dd($th->getMessage());
+            Log::info('LNMO QUERY');
+            Log::info(print_r($th->getMessage()));
         }
     }
 
@@ -285,7 +288,8 @@ class LNMO_Controller extends Controller
             }
         } catch (\Throwable $th) {
             // throw $th;
-            dd($th->getMessage());
+            Log::info('LNMO GENERATE ACCESS TOKEN');
+            Log::info(print_r($th->getMessage()));
         }
     }
 
@@ -319,7 +323,8 @@ class LNMO_Controller extends Controller
             }
         } catch (\Throwable $th) {
             // throw $th;
-            dd($th->getMessage());
+            Log::info('LNMO SUBMIT');
+            Log::info(print_r($th->getMessage()));
         }
     }
 }
