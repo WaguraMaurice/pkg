@@ -56,15 +56,15 @@ class C2B_Controller extends Controller
 
     /**
      * The Mpesa portal Username
-     * @var string $initUsername
+     * @var string $initiatorUsername
      */
-    protected $initUsername;
+    protected $initiatorUsername;
 
     /**
      * The Mpesa portal Password
-     * @var string $initPassword
+     * @var string $initiatorPassword
      */
-    protected $initPassword;
+    protected $initiatorPassword;
 
     /**
      * The signed API credentials
@@ -84,18 +84,18 @@ class C2B_Controller extends Controller
 
     public function __construct()
     {
-        $this->timestamp      = Carbon::now()->format('YmdHis');
-        $this->callbackURL    = config('app.url');
-        $this->environment    = config('mpesa.c2b.environment');
-        $this->baseURL        = 'https://' . ($this->environment == 'production' ? 'api' : 'sandbox') . '.safaricom.co.ke';
-        $this->consumerKey    = config('mpesa.c2b.consumer.key');
-        $this->consumerSecret = config('mpesa.c2b.consumer.secret');
-        $this->shortCode      = config('mpesa.c2b.shortcode');
-        $this->initUsername   = config('mpesa.c2b.initiator.username');
-        $this->initPassword   = config('mpesa.c2b.initiator.password');
-        $this->certificate    = File::get(public_path() . '/vendor/mpesa/certificates/' . $this->environment . '.cer');
+        $this->timestamp         = Carbon::now()->format('YmdHis');
+        $this->callbackURL       = config('app.url');
+        $this->environment       = config('mpesa.c2b.environment');
+        $this->baseURL           = 'https://' . ($this->environment == 'production' ? 'api' : 'sandbox') . '.safaricom.co.ke';
+        $this->consumerKey       = config('mpesa.c2b.consumer.key');
+        $this->consumerSecret    = config('mpesa.c2b.consumer.secret');
+        $this->shortCode         = config('mpesa.c2b.shortcode');
+        $this->initiatorUsername = config('mpesa.c2b.initiator.username');
+        $this->initiatorPassword = config('mpesa.c2b.initiator.password');
+        $this->certificate       = File::get(public_path() . '/vendor/mpesa/certificates/' . $this->environment . '.cer');
         openssl_public_encrypt($this->initiatorPassword, $output, $this->certificate, OPENSSL_PKCS1_PADDING);
-        $this->credentials    = base64_encode($output);
+        $this->credentials       = base64_encode($output);
     }
 
     /**
@@ -209,7 +209,7 @@ class C2B_Controller extends Controller
             'PartyA'             => $this->shortCode,
             'IdentifierType'     => 4,
             'Remarks'            => 'Account Balance: ' . $this->shortCode,
-            'Initiator'          => $this->initUsername,
+            'Initiator'          => $this->initiatorUsername,
             'SecurityCredential' => $this->credentials,
             'QueueTimeOutURL'    => route('c2b.balance.callback'),
             'ResultURL'          => route('c2b.balance.callback')
@@ -245,7 +245,7 @@ class C2B_Controller extends Controller
             'PartyA'             => $this->shortCode,
             'IdentifierType'     => 4,
             'Remarks'            => 'Transaction status query: ' . $request->transactionCode,
-            'Initiator'          => $this->initUsername,
+            'Initiator'          => $this->initiatorUsername,
             'SecurityCredential' => $this->credentials,
             'QueueTimeOutURL'    => route('c2b.status.callback'),
             'ResultURL'          => route('c2b.status.callback'),
@@ -281,7 +281,7 @@ class C2B_Controller extends Controller
     public function reverseTransaction(Request $request)
     {
         $data = json_encode([
-            'Initiator'              => $this->initUsername,
+            'Initiator'              => $this->initiatorUsername,
             'SecurityCredential'     => $this->credentials,
             'CommandID'              => 'TransactionReversal',
             'TransactionID'          => $request->TransactionCode,
