@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a16c3c541bd99241cab1c21ce8e83ac",
+    "content-hash": "48804895bbcc09b42a045874010b03e9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1439,6 +1439,68 @@
                 }
             ],
             "time": "2020-12-14T13:15:25+00:00"
+        },
+        {
+            "name": "naoray/laravel-package-maker",
+            "version": "v4.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Naoray/laravel-package-maker.git",
+                "reference": "5152110f0f8539202688c3f096b4e3ae2de33528"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Naoray/laravel-package-maker/zipball/5152110f0f8539202688c3f096b4e3ae2de33528",
+                "reference": "5152110f0f8539202688c3f096b4e3ae2de33528",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^7.0|^8.0",
+                "illuminate/filesystem": "^7.0|^8.0",
+                "illuminate/support": "^7.0|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.0"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Naoray\\LaravelPackageMaker\\LaravelPackageMakerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Naoray\\LaravelPackageMaker\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Krishan Koenig",
+                    "email": "krishan.koenig@googlemail.com"
+                }
+            ],
+            "description": "Get a package skeleton and all other `make` commands from laravel base for package development.",
+            "keywords": [
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/Naoray/laravel-package-maker/issues",
+                "source": "https://github.com/Naoray/laravel-package-maker/tree/v4.0.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Naoray",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-12-16T18:01:59+00:00"
         },
         {
             "name": "nesbot/carbon",
