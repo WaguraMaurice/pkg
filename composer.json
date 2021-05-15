@@ -15,7 +15,6 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "naoray/laravel-package-maker": "^4.0"
-        // "waguramaurice/mpesa": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
