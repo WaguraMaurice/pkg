@@ -4,7 +4,7 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="waguramaurice/mpesa Test Suite">
+        <testsuite name="montanabay39/mpesa Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

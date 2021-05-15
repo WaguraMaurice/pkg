@@ -8,6 +8,11 @@
 
 `composer require montanabay39/mpesa`
 
+## Configuration
+
+`php artisan vendor:publish`
+`php artisan migrate`
+
 ## Usage
 
 Write a few lines about the usage of this package.
@@ -30,8 +35,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
--   [Wagura Maurice](https://github.com/wagura-maurice)
--   [All Contributors](https://github.com/wagura-maurice/mpesa/contributors)
+- [Wagura Maurice](https://github.com/wagura-maurice)
+- [All Contributors](https://github.com/wagura-maurice/mpesa/contributors)
 
 ## Security
 
