@@ -141,7 +141,7 @@ class LNMO_Controller extends Controller
             'PartyA'            => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'PartyB'            => $this->shortCode,
             'PhoneNumber'       => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
-            'CallBackURL'       => route('mpesa.lnmo.callback'),
+            'CallBackURL'       => route('daraja.lnmo.callback'),
             'AccountReference'  => $request->reference,
             'TransactionDesc'   => $request->reference . ' LNMO STK Push Transaction'
         ]);

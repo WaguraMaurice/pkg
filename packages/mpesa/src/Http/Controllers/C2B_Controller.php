@@ -112,8 +112,8 @@ class C2B_Controller extends Controller
         $data = json_encode([
             'ShortCode'       => $this->shortCode,
             'ResponseType'    => 'Completed', // ['Completed', 'Cancelled']
-            'ConfirmationURL' => route('mpesa.c2b.validation.callback'),
-            'ValidationURL'   => route('mpesa.c2b.confirmation.callback')
+            'ConfirmationURL' => route('daraja.c2b.validation.callback'),
+            'ValidationURL'   => route('daraja.c2b.confirmation.callback')
         ]);
 
         $endpoint = $this->baseURL . '/mpesa/c2b/v1/registerurl';

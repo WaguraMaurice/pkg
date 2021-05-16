@@ -116,8 +116,8 @@ class B2C_Controller extends Controller
             'PartyA'             => $this->shortCode,
             'PartyB'             => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'Remarks'            => 'B2C Transaction Simulation: ' . $request->reference,
-            'QueueTimeOutURL'    => route('mpesa.b2c.callback'),
-            'ResultURL'          => route('mpesa.b2c.callback'),
+            'QueueTimeOutURL'    => route('daraja.b2c.callback'),
+            'ResultURL'          => route('daraja.b2c.callback'),
             'Occasion'           => null //Optional
         ]);
 
@@ -193,8 +193,8 @@ class B2C_Controller extends Controller
             'Remarks'            => $request->transactionCode . ' Transaction Status Query',
             'Initiator'          => $this->initiatorUsername,
             'SecurityCredential' => $this->credentials,
-            'QueueTimeOutURL'    => route('mpesa.b2c.status.callback'),
-            'ResultURL'          => route('mpesa.b2c.status.callback'),
+            'QueueTimeOutURL'    => route('daraja.b2c.status.callback'),
+            'ResultURL'          => route('daraja.b2c.status.callback'),
             'TransactionID'      => $request->transactionCode,
             'Occasion'           => $request->transactionCode . ' Transaction Status Query'
         ]);
@@ -269,8 +269,8 @@ class B2C_Controller extends Controller
             'Remarks'            => 'Checking Account Balance for ' . $this->shortCode,
             'Initiator'          => $this->initiatorUsername,
             'SecurityCredential' => $this->credentials,
-            'QueueTimeOutURL'    => route('mpesa.b2c.balance.callback'),
-            'ResultURL'          => route('mpesa.b2c.balance.callback')
+            'QueueTimeOutURL'    => route('daraja.b2c.balance.callback'),
+            'ResultURL'          => route('daraja.b2c.balance.callback')
         ]);
 
         $endpoint = $this->baseURL . '/mpesa/accountbalance/v1/query';
