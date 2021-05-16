@@ -18,7 +18,7 @@ use Montanabay39\Mpesa\Http\Controllers\B2C_Controller;
 
 // all callback route's initialize from safaricom servers and should be secured with the right ssl to work.
 
-Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/'], function () {
+Route::group(['middleware' => 'api', 'prefix' => 'api/vendor/daraja'], function () {
     // MPESA LNMO ROUTES
     Route::post('LMNO/transaction', [LNMO_Controller::class, 'transaction'])->name('daraja.lnmo.transaction');
     Route::post('LMNO/transaction/callback', [LNMO_Controller::class, 'callback'])->name('daraja.lnmo.transaction.callback');
