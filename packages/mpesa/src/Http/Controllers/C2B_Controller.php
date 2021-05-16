@@ -119,7 +119,7 @@ class C2B_Controller extends Controller
         $endpoint = $this->baseURL . '/mpesa/c2b/v1/registerurl';
         $response = $this->submit($endpoint, $data);
 
-        return json_encode($response);
+        return response()->json($response);
     }
 
     /**
@@ -146,7 +146,7 @@ class C2B_Controller extends Controller
         $endpoint = $this->baseURL . '/mpesa/c2b/v1/simulate';
         $response = $this->submit($endpoint, $data);
 
-        return json_encode($response);
+        return response()->json($response);
     }
 
     /**
@@ -279,8 +279,8 @@ class C2B_Controller extends Controller
             'Amount'                 => $request->amount,
             'ReceiverParty'          => '254' . substr($request->phoneNumber, -9), // supports translations in KENYA only!!
             'RecieverIdentifierType' => 1, // [1 => 'MSISDN', 2 => 'Till_Number', 4 => 'Shortcode']
-            'ResultURL'              => route('c2b.ke.reverse.transaction.callback'),
-            'QueueTimeOutURL'        => route('c2b.ke.reverse.transaction.callback'),
+            'ResultURL'              => route('c2b.reverse.callback'),
+            'QueueTimeOutURL'        => route('c2b.reverse.callback'),
             'Remarks'                => $request->transactionCode . ' Transaction Reversal',
             'Occasion'               => $request->transactionCode . ' Transaction Reversal'
         ]);
@@ -288,7 +288,7 @@ class C2B_Controller extends Controller
         $endpoint = $this->baseURL . '/mpesa/reversal/v1/request';
         $response = $this->submit($endpoint, $data);
 
-        return json_encode($response);
+        return response()->json($response);
     }
 
     public function reverseCallback(Request $request)
@@ -322,7 +322,7 @@ class C2B_Controller extends Controller
         $endpoint = $this->baseURL . '/mpesa/accountbalance/v1/query';
         $response = $this->submit($endpoint, $data);
 
-        return json_encode($response);
+        return response()->json($response);
     }
 
     public function balanceCallback(Request $request)

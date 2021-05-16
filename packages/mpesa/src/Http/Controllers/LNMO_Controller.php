@@ -237,7 +237,7 @@ class LNMO_Controller extends Controller
 
             if($transaction) {
 
-                $response->ResultCode == 0 ? $transaction->update([
+                optional($response)->ResultCode == 0 ? $transaction->update([
                     'responseFeedBack' => json_encode(array_merge(json_decode($transaction->responseFeedBack, true), ['query' => $response])),
                     '_status'          => MpesaTransaction::ACCEPTED
                 ]) : $transaction->update([
@@ -251,7 +251,7 @@ class LNMO_Controller extends Controller
         } catch (\Throwable $th) {
             // throw $th;\
             Log::info('LNMO QUERY');
-            Log::info(print_r($th->getMessage()));
+            Log::info(print($th->getMessage()));
         }
     }
 
